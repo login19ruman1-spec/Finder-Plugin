@@ -15,13 +15,21 @@
     </properties>
 
     <repositories>
+        <!-- Репозиторий PaperMC -->
         <repository>
             <id>papermc-repo</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
+        
+        <!-- Репозиторий Maven Central -->
+        <repository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </repository>
     </repositories>
 
     <dependencies>
+        <!-- Зависимость от Paper API -->
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
@@ -29,15 +37,18 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- Зависимость от Apache Commons Lang -->
+        <!-- Обновлено до актуальной версии -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.12.1</version>
+            <version>3.13.0</version> <!-- Проверьте актуальную версию на Maven Central -->
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
+            <!-- Плагин для компиляции Java кода -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -54,6 +65,7 @@
                 </configuration>
             </plugin>
 
+            <!-- Плагин для создания fat jar с помощью Shade -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -85,7 +97,32 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- Плагин для создания обычного jar файла (избыточно, если используется Shade) -->
+            <!-- Можно удалить этот плагин для упрощения сборки -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.4.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
+    <!-- Опционально: Конфигурация дополнительных параметров -->
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <env>development</env>
+            </properties>
+        </profile>
+    </profiles>
 </project>
